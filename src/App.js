@@ -5,6 +5,7 @@ import TabBarBottom from './common/tabbar/tabbar.jsx';
 import RouterConfig from './router/index.jsx';
 
 function App() {
+
   return (
     <Provider store={store}>
       <div>

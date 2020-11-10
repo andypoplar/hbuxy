@@ -1,6 +1,16 @@
 import * as actionTypes from './actionTypes'
+import axios from 'axios';
 
-export const changeTopShow = (isShow) => ({
-  type: actionTypes.CHANGE_TOP_SHOW,
-  isShow
+const changeSayListData = (sayList) => ({
+  type: actionTypes.CHANGE_SAY_LIST_DATA,
+  sayList
 })
+
+export const getHomeSayList = () => {
+  return (dispatch) => {
+    axios.get('/api/saylist.json').then(res => {
+      const result = res.data.data
+      dispatch(changeSayListData(result))
+    })
+  }
+}

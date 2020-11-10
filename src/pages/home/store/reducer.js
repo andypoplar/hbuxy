@@ -2,15 +2,15 @@ import { fromJS } from 'immutable'
 import * as actionTypes from './actionTypes'
 
 const defaultState = fromJS({
-  showScroll: '111111'
+  sayList: []
 })
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case actionTypes.CHANGE_TOP_SHOW:
+    case actionTypes.CHANGE_SAY_LIST_DATA:
       return state.merge({
-        showScroll: action.isShow
+        sayList: fromJS(action.sayList)
       })
     default:
       return state

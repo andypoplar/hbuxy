@@ -1,1 +1,1 @@
-export const CHANGE_TOP_SHOW = 'home/CHANGE_TOP_SHOW'
+export const CHANGE_SAY_LIST_DATA = 'home/CHANGE_SAY_LIST_DATA'

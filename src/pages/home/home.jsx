@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { actionCreators } from './store'
 import Header from '../../common/header/header.jsx';
-import './home.css'
+import CarouselImgs from '../../common/carousel/carousel.jsx';
+import SayListData from './components/sayList/sayList.jsx';
+import './home.less'
 
 function Home(props) {
+  const { changeSayList, sayList } = props
+
+  useEffect(() => {
+    changeSayList()
+  }, [])
+
   return (
     <div>
       <Header title='首页' />
-      <p>我是首页</p>
+      <CarouselImgs />
+      <SayListData sayList = {sayList} />
     </div>
   )
 }
 
 const mapState = (state) => ({
-  showScroll: state.getIn(['home', 'showScroll']),
+  sayList: state.getIn(['home', 'sayList']),
 })
 
 const mapDispatch = (dispatch) => ({
-  changeHomeData() {
-    const action = actionCreators.changeTopShow('22222');
+  changeSayList() {
+    const action = actionCreators.getHomeSayList();
     dispatch(action)
   }
 })
