@@ -4,7 +4,8 @@ import { actionCreators } from './store'
 import Header from '../../common/header/header.jsx';
 import CarouselImgs from '../../common/carousel/carousel.jsx';
 import SayListData from './components/sayList/sayList.jsx';
-import './home.less'
+import Scroll from '../../common/scroll/scroll.jsx';
+import './home.css'
 
 function Home(props) {
   const { changeSayList, sayList } = props
@@ -13,11 +14,18 @@ function Home(props) {
     changeSayList()
   }, [])
 
+  const contentScroll = (position)=> {
+    console.log(position.y);
+  }
+
   return (
-    <div>
+    <div className="home">
       <Header title='首页' />
-      <CarouselImgs />
-      <SayListData sayList = {sayList} />
+      <Scroll
+        onScroll={contentScroll}> 
+        <CarouselImgs />
+        <SayListData sayList = {sayList} />
+      </Scroll>
     </div>
   )
 }

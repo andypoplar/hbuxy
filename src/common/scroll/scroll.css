@@ -1,0 +1,7 @@
+.wrapper {
+  height: calc(100vh - 94px);
+  position: absolute;
+  top: 44px;
+  left: 0;
+  right: 0;
+}

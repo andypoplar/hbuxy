@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import SayItem from '../sayItem/sayItem.jsx';
+import './sayList.css';
 
 function SayList(props) {
   const { sayList } = props
@@ -16,6 +18,10 @@ function SayList(props) {
       }
     </div>
   )
+}
+
+SayList.propTypes = {
+  sayList: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

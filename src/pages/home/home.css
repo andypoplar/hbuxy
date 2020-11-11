@@ -1,3 +1,4 @@
-p {
-  color: red;
+.home {
+  height: 100vh;
+  position: relative;
 }
