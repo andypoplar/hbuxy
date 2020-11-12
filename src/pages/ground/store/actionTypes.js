@@ -1,1 +1,2 @@
-export const CHANGE_TOP_SHOW = 'home/CHANGE_TOP_SHOW'
+export const RECENT_VIEWED = 'ground/RECENT_VIEWED'
+export const CATEGORY_LIST = 'ground/CATEGORY_LIST'

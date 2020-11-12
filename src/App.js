@@ -1,4 +1,5 @@
 import { Provider } from 'react-redux'
+import React from 'react';
 import 'antd-mobile/dist/antd-mobile.css'
 import store from './store'
 import TabBarBottom from './common/tabbar/tabbar.jsx';

@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import BScroll from 'better-scroll';
-import './scroll.css'
+import './scroll.less'
 
 function Scroll(props) {
 
@@ -9,11 +9,11 @@ function Scroll(props) {
 
   const scrollContainerRef = useRef();
 
-  const { pullUp, pullDown, onScroll, probeType } = props;
+  const { pullUp, pullDown, onScroll } = props;
   useEffect(() => {
     const scroll = new BScroll(scrollContainerRef.current, {
       click: true,
-      probeType,
+      probeType: 3,
       scrollY: true,
       pullUpLoad: true
     })
@@ -21,8 +21,11 @@ function Scroll(props) {
     return () => {
       setBScroll(null)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  let pullUpDebounce = useCallback(() => pullUp(), [pullUp])
+
+  let pullDownDebounce = useCallback(() => pullDown(), [pullDown])
 
   useEffect(() => {
     if(!bScroll || !onScroll) return;
@@ -31,6 +34,34 @@ function Scroll(props) {
       bScroll.off('scroll', onScroll);
     }
   }, [onScroll, bScroll]);
+
+  useEffect(() => {
+    if(!bScroll || !pullUp) return;
+    const handlePullUp = () => {
+      //判断是否滑动到了底部
+      if(bScroll.y === bScroll.maxScrollY) {
+        pullUpDebounce();
+      }
+    };
+    bScroll.on('scrollEnd', handlePullUp);
+    return () => {
+      bScroll.off('scrollEnd', handlePullUp);
+    }
+  }, [pullUp, pullUpDebounce, bScroll]);
+
+  useEffect(() => {
+    if(!bScroll || !pullDown) return;
+    const handlePullDown = (pos) => {
+      //判断用户的下拉动作
+      if(pos.y > 50) {
+        pullDownDebounce();
+      }
+    };
+    bScroll.on('touchEnd', handlePullDown);
+    return () => {
+      bScroll.off('touchEnd', handlePullDown);
+    }
+  }, [pullDown, pullDownDebounce, bScroll]);
 
   return (
     <div className="wrapper" ref={scrollContainerRef}>
@@ -52,7 +83,6 @@ Scroll.propTypes = {
   pullDown: PropTypes.func,
   pullUp: PropTypes.func,
   onScroll: PropTypes.func,
-  probeType: PropTypes.number
 }
 
 export default Scroll

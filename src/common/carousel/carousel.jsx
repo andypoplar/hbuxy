@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'antd-mobile';
-import './carousel.css'
+import './carousel.less'
 
 function CarouselImgs(props) {
 
@@ -28,11 +28,11 @@ function CarouselImgs(props) {
             <img
               src={`https://zos.alipayobjects.com/rmsportal/${val}.png`}
               alt=""
-              style={{ width: '100%', verticalAlign: 'top' }}
+              style={{ width: '100%', verticalAlign: 'top', borderRadius: '15px' }}
               onLoad={() => {
                 // fire window resize event to change height
                 window.dispatchEvent(new Event('resize'));
-                setImgHeight(imgHeight);
+                setImgHeight('auto');
               }}
             />
           </a>

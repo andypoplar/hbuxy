@@ -1,8 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import SayItem from '../sayItem/sayItem.jsx';
+import { Link } from 'react-router-dom';
 import './sayList.css';
+
+import SayItem from '../sayItem/sayItem.jsx';
 
 function SayList(props) {
   const { sayList } = props
@@ -12,7 +13,9 @@ function SayList(props) {
       {
         sayList.map(item => {
           return (
-            <SayItem key={item.get('id')} sayItemData={item} />
+            <Link style={{ textDecoration:'none', color: 'black'}} key={item.get('id')} to={`/detail/${item.get('id')}`}>
+              <SayItem key={item.get('id')} sayItemData={item} />
+            </Link>
           )
         })
       }
@@ -24,9 +27,5 @@ SayList.propTypes = {
   sayList: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => ({
-
-})
-
-export default connect(mapStateToProps, null)(SayList)
+export default SayList
 

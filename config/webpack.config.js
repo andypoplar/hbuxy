@@ -56,8 +56,10 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 const swSrc = paths.swSrc;
 
 // style files regexes
-const cssRegex = /\.(css|less)$/;
+const cssRegex = /\.(css)$/;
+const lessRegex = /\.(less)$/;
 const cssModuleRegex = /\.module\.css$/;
+const lessModuleRegex = /\.module\.less$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -488,6 +490,31 @@ module.exports = function (webpackEnv) {
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass
+        
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              use: getStyleLoaders({
+                importLoaders: 2,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+              },
+                'less-loader'
+              ),
+              sideEffects: true,
+            },
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders({
+                importLoaders: 2,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+                modules:true,
+                getLocalIdent: getCSSModuleLocalIdent,
+              },
+              'less-loader'
+              ),
+            },
+
+            
             {
               test: sassRegex,
               exclude: sassModuleRegex,
@@ -498,7 +525,7 @@ module.exports = function (webpackEnv) {
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
                 },
-                'less-loader'
+                'sass-loader'
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -520,7 +547,7 @@ module.exports = function (webpackEnv) {
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
                 },
-                'less-loader'
+                'sass-loader'
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
